@@ -105,4 +105,20 @@
     whichObj.target.verticesNeedUpdate = true;
   }
 
+  //gets a random set for a geometery, and sets the target to it,
+  //so that the data will tween there
+  function randomVertexNormals(whichObj){
+
+    for(var i = 0; i < whichObj.target.vertices.length; i++){
+
+      var vert = whichObj.target.vertices[i].normal;
+      vert.x = (Math.random() - .5) * 2;
+      vert.y = (Math.random() - .5) * 2;
+      vert.z = (Math.random() - .5) * 2;
+
+    }
+
+    whichObj.target.verticesNeedUpdate = true;
+  }
+
 

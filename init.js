@@ -12,11 +12,10 @@
     );
     camera.position.z = SCENESIZE;  
     scene = new THREE.Scene();
-
     
     material = new THREE.MeshNormalMaterial();
     material.shading = THREE.SmoothShading;
-    geo = new THREE.SphereGeometry(SCENESIZE/2,6,6); 
+    geo = new THREE.SphereGeometry(SCENESIZE/2,60,60);
     mesh = new DYNAMIC(geo,material);
 
     DYNAMOS.push(mesh);
