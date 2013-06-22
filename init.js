@@ -13,15 +13,46 @@ function init(){
   camera.position.z = SCENESIZE;  
   scene = new THREE.Scene();
   
-  material = new THREE.MeshNormalMaterial();
+  var material = new THREE.MeshNormalMaterial();
   material.shading = THREE.SmoothShading;
-  geo = new THREE.SphereGeometry(SCENESIZE/2,60,60);
+  var geo = new THREE.SphereGeometry(SCENESIZE/4,20,20);
   
-  circle = new DYNAMIC(geo,material);
-  circles = new CLUSTER( circle, 20 );
+  sphere = new DYNAMIC(geo,material);
+  spheres = new CLUSTER( sphere , 20 );
 
-  circles.addToScene();
-  clusters.push(circles);
+  spheres.addToScene();
+  clusters.push(spheres);
+
+
+
+  var material = new THREE.MeshNormalMaterial();
+  material.shading = THREE.SmoothShading;
+  var geo = new THREE.IcosahedronGeometry(SCENESIZE/4,2);
+
+  icosahedron = new DYNAMIC(geo,material);
+  icosahedrons = new CLUSTER( icosahedron, 20 );
+
+  icosahedrons.targetScene.position.x = SCENESIZE/2;
+
+  icosahedrons.addToScene();
+  clusters.push(icosahedrons);
+
+
+
+  var material = new THREE.MeshNormalMaterial();
+  material.shading = THREE.SmoothShading;
+  var geo = new THREE.CubeGeometry(SCENESIZE/4,SCENESIZE/4,SCENESIZE/4,10,10,10);
+
+  cube = new DYNAMIC(geo,material);
+  cubes = new CLUSTER( cube , 20 );
+
+  cubes.targetScene.position.x = -SCENESIZE/2;
+
+  cubes.addToScene();
+  clusters.push(cubes);
+
+
+
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);

@@ -135,7 +135,7 @@ CLUSTER.prototype = {
   lineXPosition: function( length ){
     for(var i = 0; i < this.numOf; i++){
       var x = ((i/this.numOf)-.5) * length;
-      this.targets[i].position.set( pos.z, 0, 0 );
+      this.targets[i].position.set( x , 0, 0 );
     }
   },
 
@@ -326,23 +326,26 @@ CLUSTER.prototype = {
     }
   },
 
+  randomSceneScale:function( size ){
+    var s = Math.random() * size;
+    this.targetScene.scale.set( s , s , s );
+  },
 
+  randomSceneAllScale: function( size ){
+    var x = Math.random() * size;
+    var y = Math.random() * size;
+    var z = Math.random() * size;
+    this.targetScene.scale.set( x , y , z );
+  },
 
+  linearSceneScale: function( size ){
+    var s = (i/this.numOf) * size;
+    this.targetScene.scale.set( s , s , s );
+  },
 
-
-/*
- 
-  ringXRotation
-  ringYRotation
-  ringZRotation
-
-  noRotation
-
-  noScale
-  linearScale
-  randomScale
-
-*/
+  noSceneScale:function( range ){
+    this.targetScene.scale.set( 1 , 1 , 1 );
+  },
 
   randomSceneRotation: function(range){
     var x = ( Math.random() - .5 ) * range; 
@@ -351,17 +354,17 @@ CLUSTER.prototype = {
     this.targetScene.rotation.set( x , y , z );
   },
 
+  targetSceneRotation: function( x , y , z ){
+    this.targetScene.rotation.set( x , y , z );
+  },
+
   noSceneRotation: function(){
-    this.targetScene.rotation.set( 0 , 0 , 0);
-  }
+    this.targetScene.rotation.set( 0 , 0 , 0 );
+  },
 
   centerScene: function(){
     this.targetScene.position.set( 0 , 0 , 0 );
   },
-
-  centerScenePosition: this.centerScene(),
-
-  
 
   
 

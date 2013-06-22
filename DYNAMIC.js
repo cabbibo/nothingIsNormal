@@ -189,18 +189,156 @@ DYNAMIC.prototype = {
 
   },
 
-  randomVertexNormals:function(){
 
+  fractGeo1: function(size){
     for(var i = 0; i < this.target.vertices.length; i++){
 
+      v = this.target.vertices[i];
+
+      for( var j = 0; j < 5; j ++){
+        var x = v.x*v.x - v.y*v.y + v.z;
+        var y = v.y * v.x + v.x * v.y + Math.cos(v.z) ;
+        v.x = x;
+        v.y = y;
+        v.z = Math.cos( v.x / v.y)
+      }
+
+      if( isNaN(v.x) ) v.x = Math.random() - .5;
+      if( isNaN(v.y) ) v.y = Math.random() - .5;
+      if( isNaN(v.z) ) v.z = Math.random() - .5;
+
+      var vert = this.target.vertices[i];
+      vert.x = v.x;
+      vert.y = v.y;
+      vert.z = v.z;
+      vert.normalize();
+      vert.multiplyScalar( size );
+
+    }
+  },
+
+
+  randomVertexNormals:function(){
+    for(var i = 0; i < this.target.vertices.length; i++){
       var vert = this.target.vertices[i].normal;
       vert.x = (Math.random() - .5) * 2;
       vert.y = (Math.random() - .5) * 2;
       vert.z = (Math.random() - .5) * 2;
-
     }
-
   },
+
+  randomXVertexNormals:function(){
+    for(var i = 0; i < this.target.vertices.length; i++){
+      var vert = this.target.vertices[i].normal;
+      vert.x = (Math.random() - .5) * 2;
+    }
+  },
+
+  randomYVertexNormals:function(){
+    for(var i = 0; i < this.target.vertices.length; i++){
+      var vert = this.target.vertices[i].normal;
+      vert.y = (Math.random() - .5) * 2;
+    }
+  },
+
+  randomZVertexNormals:function(){
+    for(var i = 0; i < this.target.vertices.length; i++){
+      var vert = this.target.vertices[i].normal;
+      vert.z = (Math.random() - .5) * 2;
+    }
+  },
+
+
+  linearXVertexNormals:function(){
+    var l = this.target.vertices.length
+    for(var i = 0; i < l ; i++){
+      var vert = this.target.vertices[i].normal;
+      vert.x = ((i / l)-.5) * 2;
+      //vert.y = ((i / l)-.5) * 2;
+      //vert.z = ((i / l)-.5) * 2;
+    }
+  },
+
+  linearYVertexNormals:function(){
+    var l = this.target.vertices.length
+    for(var i = 0; i < l ; i++){
+      var vert = this.target.vertices[i].normal;
+      vert.y = ((i / l)-.5) * 2;
+    }
+  },
+
+  linearZVertexNormals:function(){
+    var l = this.target.vertices.length
+    for(var i = 0; i < l ; i++){
+      var vert = this.target.vertices[i].normal;
+      vert.z = ((i / l)-.5) * 2;
+    }
+  },
+
+
+  /*
+   *   Time to get weird with it
+   */
+
+  //Call this a bunch of times to split sphere in two
+  lavaAndForest:function(){
+    for(var i = 0; i < this.target.vertices.length-1; i++){
+      var vert = this.target.vertices[i].normal;
+      var oVert = this.target.vertices[i+1].normal;
+      vert.x = (Math.random()-.5) * Math.cos(oVert.x/2);
+      vert.y = oVert.y;
+      vert.z = Math.atan(oVert.z/2);
+      vert.normalize();
+    }
+  },
+  fract1:function(){
+    for(var i = 1; i < this.target.vertices.length; i++){
+
+      v = this.target.vertices[i].normal;
+
+      for( var j = 0; j < 5; j ++){
+        var x = v.x*v.x - v.y*v.y + v.z;
+        var y = v.y * v.x + v.x * v.y + this.target.vertices[i-1].normal.z ;
+        v.x = x;
+        v.y = y;
+      }
+      if( isNaN(v.x) ) v.x = Math.random() - .5;
+      if( isNaN(v.y) ) v.y = Math.random() - .5;
+      if( isNaN(v.z) ) v.z = Math.random() - .5;
+
+      var vert = this.target.vertices[i].normal;
+      vert.x = v.x;
+      vert.y = v.y;
+      vert.normalize();
+    }
+  },
+
+
+  fract2:function(){
+    for(var i = 1; i < this.target.vertices.length; i++){
+
+      v = this.target.vertices[i].normal;
+
+      for( var j = 0; j < 4; j ++){
+        var x = v.x * v.x - v.y * v.y + Math.sin(v.z);
+        var y = v.y * v.x + v.x * v.y + Math.cos(v.z);
+        var z = Math.sin( v.y / v.x );
+        v.x = x;
+        v.y = y;
+        v.z = z;
+      }
+      var vert = this.target.vertices[i].normal;
+
+      if( isNaN(v.x) ) v.x = Math.random() - .5;
+      if( isNaN(v.y) ) v.y = Math.random() - .5;
+      if( isNaN(v.z) ) v.z = Math.random() - .5;
+      vert.x = v.x;
+      vert.y = v.y;
+      vert.z = v.z;
+      vert.normalize();
+    }
+  },
+
 
   //Sets the normals of the target back to one that is
   //'Geometrically Accurate'
